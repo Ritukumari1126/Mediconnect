@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {getAuth , signInWithPopup , GoogleAuthProvider, signInWithEmailAndPassword} from 'firebase/auth'
 import {app} from '../Firebase'
 import { useNavigate } from 'react-router-dom'
+import { GithubAuthProvider } from 'firebase/auth/web-extension'
 
 const login = () => {
   const [email,setEmail] = useState('')
@@ -33,6 +34,18 @@ const login = () => {
         })
      }
 
+     const loginwithGithub = ()=>{
+        const auth = getAuth(app)
+        const provider = new GithubAuthProvider
+        signInWithPopup(auth,provider)
+        .then(result=>{
+            console.log(result)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+     }
+
    return (
      <div>
      <h1>Login</h1>
@@ -44,6 +57,7 @@ const login = () => {
          <br/>
 
          <button type= 'submit' onClick={loginwithGoogle}>Login with Google</button>
+         <button type= 'submit' onClick={loginwithGithub}>Login with Github</button>
      
          
        </form>
